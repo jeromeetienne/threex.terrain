@@ -170,8 +170,8 @@ THREEx.Terrain.planeToHeightMapCoords	= function(heightMap, planeMesh, x, z){
 	position.z	*= (depth-1)
 
 	position.y	= THREEx.Terrain.heightMapToHeight(heightMap, position.x, position.z)
-// console.log('height', height, position)
 	position.y	= (position.y-0.5)*2
+	position.y	*= planeMesh.scale.z
 
 	return position.y
 }
@@ -204,7 +204,6 @@ THREEx.Terrain.planeToHeightMapCoords0	= function(position, heightMap, planeMesh
 	position.z	*= (depth-1)
 
 	var height	= THREEx.Terrain.heightMapToHeight(heightMap, position.x, position.z)
-// console.log('height', height, position)
 	position.y	= (height-0.5)*2
 
 	return position;
@@ -274,6 +273,11 @@ THREEx.Terrain.heightToColor	= (function(){
 		return color;		
 	}
 })()
+
+
+//////////////////////////////////////////////////////////////////////////////////
+//		comment								//
+//////////////////////////////////////////////////////////////////////////////////
 
 /**
  * plane geometry with THREE.Face3 from three.js r66

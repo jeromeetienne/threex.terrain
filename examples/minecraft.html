@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<script src="vendor/three.js/build/three-min.js"></script>
+<script src='vendor/three.js/examples/js/SimplexNoise.js'></script>
+<script src="vendor/require.js/require.js"></script>
+<body style='margin: 0px; background-color: #bbbbbb;overflow: hidden;'><script>
+require([ 'bower_components/threex.minecraft/package.require.js'
+	, '../package.require.js'
+	], function(){
+	var renderer	= new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	var updateFcts	= [];
+	var scene	= new THREE.Scene();
+	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
+	camera.position.y = 0.3;
+	camera.position.z = 2;
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		set 3 point lighting						//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	;(function(){
+		// add a ambient light
+		var light	= new THREE.AmbientLight( 0x202020 )
+		scene.add( light )
+		// add a light in front
+		var light	= new THREE.DirectionalLight('white', 5)
+		light.position.set(0.5, 0.0, 2)
+		scene.add( light )
+		// add a light behind
+		var light	= new THREE.DirectionalLight('white', 0.75*2)
+		light.position.set(-0.5, -0.5, -2)
+		scene.add( light )		
+	})()
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		add an object and make it move					//
+	//////////////////////////////////////////////////////////////////////////////////	
+
+	var heightMap	= THREEx.Terrain.allocateHeightMap(4, 4)
+	var heightMap	= THREEx.Terrain.allocateHeightMap(16, 16)
+	var heightMap	= THREEx.Terrain.allocateHeightMap(256,256)
+	var heightMap	= THREEx.Terrain.allocateHeightMap(128,128)
+	THREEx.Terrain.simplexHeightMap(heightMap)
+	
+	var geometry	= THREEx.Terrain.heightMapToPlaneGeometry(heightMap)
+	THREEx.Terrain.heightMapToVertexColor(heightMap, geometry)
+	
+	
+	var material	= new THREE.MeshPhongMaterial({
+		shading		: THREE.SmoothShading,
+		vertexColors 	: THREE.VertexColors,
+	});
+	var ground	= new THREE.Mesh( geometry, material );
+	scene.add( ground );
+	ground.rotateX(-Math.PI/2)
+	ground.scale.x	= 20*10
+	ground.scale.y	= 20*10
+	ground.scale.z	= 1*10
+	// ground.scale.multiplyScalar(10)
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		helpers to debug						//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var helper	= new THREE.WireframeHelper(ground)
+	helper.material.color.set('black')
+	helper.position.y	= 0.1
+	scene.add(helper)
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var player	= new THREEx.MinecraftPlayer()
+	scene.add(player.character.root)
+	updateFcts.push(function(delta, now){
+		player.update(delta, now)
+	})
+	
+	updateFcts.push(function(delta, now){
+		var position	= player.character.root.position
+		position.y	= THREEx.Terrain.planeToHeightMapCoords(heightMap, ground, position.x, position.z)
+	})
+	
+	
+	// attach camera to player
+	player.character.root.add(camera)
+	camera.position.z	= -2
+	camera.position.y	= 1
+	camera.lookAt(new THREE.Vector3(0,0.5,2))
+
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		controls.input based on keyboard				//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	document.body.addEventListener('keydown', function(event){
+		var input	= player.controls.input
+		if( event.keyCode === 'W'.charCodeAt(0) )	input.up	= true
+		if( event.keyCode === 'S'.charCodeAt(0) )	input.down	= true
+		if( event.keyCode === 'A'.charCodeAt(0) )	input.left	= true
+		if( event.keyCode === 'D'.charCodeAt(0) )	input.right	= true
+	})
+	document.body.addEventListener('keyup', function(event){
+		var input	= player.controls.input
+		if( event.keyCode === 'W'.charCodeAt(0) )	input.up	= false
+		if( event.keyCode === 'S'.charCodeAt(0) )	input.down	= false
+		if( event.keyCode === 'A'.charCodeAt(0) )	input.left	= false
+		if( event.keyCode === 'D'.charCodeAt(0) )	input.right	= false
+	})
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the scene						//
+	//////////////////////////////////////////////////////////////////////////////////
+	updateFcts.push(function(){
+		renderer.render( scene, camera );		
+	})
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		loop runner							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var lastTimeMsec= null
+	requestAnimationFrame(function animate(nowMsec){
+		// keep looping
+		requestAnimationFrame( animate );
+		// measure time
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		// call each update function
+		updateFcts.forEach(function(updateFn){
+			updateFn(deltaMsec/1000, nowMsec/1000)
+		})
+	})
+})
+</script></body>

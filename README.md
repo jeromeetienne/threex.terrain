@@ -96,4 +96,8 @@ var canvas	= THREEx.Terrain.heightMapToCanvas(heightMap)
 document.body.appendChild(canvas)
 ```
 
+## Possible optimisations
+* use shader material to build the perlin in shader
+* use THREE.BufferGeometry to boost the generation step
+
 

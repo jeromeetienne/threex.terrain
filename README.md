@@ -14,7 +14,10 @@ It shows a perlin terrain in a canvas 2d.
 It displays the terrain in 3d with three.js.
 * [examples/height.html](http://jeromeetienne.github.io/threex.terrain/examples/height.html)
 \[[view source](https://github.com/jeromeetienne/threex.terrain/blob/master/examples/height.html)\] :
-It show how to test the height in a 3d terrain/
+It show how to test the height in a 3d terrain
+* [examples/minecraft.html](http://jeromeetienne.github.io/threex.terrain/examples/minecraft.html)
+\[[view source](https://github.com/jeromeetienne/threex.terrain/blob/master/examples/minecraft.html)\] :
+It show a minecraft character walking on perlin terrain
 
 How To Install It
 =================

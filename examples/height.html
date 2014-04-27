@@ -45,7 +45,7 @@
 	
 	
 	var material	= new THREE.MeshPhongMaterial({
-		shading		: THREE.SmoothShading,
+		shading		: THREE.FlatShading,
 		vertexColors 	: THREE.VertexColors,
 	});
 	var mesh	= new THREE.Mesh( geometry, material );
@@ -109,26 +109,6 @@ console.log('testPosition.x', testPosition, planeMesh)
 		testPosition.y	= THREEx.Terrain.planeToHeightMapCoords(heightMap, planeMesh, testPosition.x, testPosition.z)
 	})
 })(mesh)
-
-	//////////////////////////////////////////////////////////////////////////////////
-	//		helpers to debug						//
-	//////////////////////////////////////////////////////////////////////////////////
-
-	var helper	= new THREE.WireframeHelper(mesh)
-	scene.add(helper)
-
-	// var helper	= new THREE.FaceNormalsHelper(mesh)
-	// scene.add(helper)
-	// onRenderFcts.push(function(delta, now){
-	// 	helper.update()
-	// })	
-
-	// var vertexHelper= new THREE.VertexNormalsHelper(mesh)
-	// scene.add(vertexHelper)
-	// onRenderFcts.push(function(delta, now){
-	// 	vertexHelper.update() 
-	// })	
-
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Camera Controls							//

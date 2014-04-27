@@ -51,7 +51,7 @@
 	
 	
 	var material	= new THREE.MeshPhongMaterial({
-		shading		: THREE.SmoothShading,
+		shading		: THREE.FlatShading,
 		vertexColors 	: THREE.VertexColors,
 	});
 	// var material	= new THREE.MeshNormalMaterial({
@@ -70,25 +70,6 @@
 		mesh.rotation.z += 0.2 * delta;
 		// mesh.rotation.y += 2 * delta;		
 	})
-
-	//////////////////////////////////////////////////////////////////////////////////
-	//		helpers to debug						//
-	//////////////////////////////////////////////////////////////////////////////////
-
-	// var helper	= new THREE.WireframeHelper(mesh)
-	// scene.add(helper)
-
-	// var helper	= new THREE.FaceNormalsHelper(mesh)
-	// scene.add(helper)
-	// onRenderFcts.push(function(delta, now){
-	// 	helper.update()
-	// })	
-
-	// var vertexHelper= new THREE.VertexNormalsHelper(mesh)
-	// scene.add(vertexHelper)
-	// onRenderFcts.push(function(delta, now){
-	// 	vertexHelper.update() 
-	// })	
 
 
 	//////////////////////////////////////////////////////////////////////////////////

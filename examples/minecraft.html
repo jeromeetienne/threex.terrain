@@ -6,13 +6,15 @@
 require([ 'bower_components/threex.minecraft/package.require.js'
 	, '../package.require.js'
 	], function(){
-	var renderer	= new THREE.WebGLRenderer();
+	var renderer	= new THREE.WebGLRenderer({
+		antialias	: true
+	});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 
 	var updateFcts	= [];
 	var scene	= new THREE.Scene();
-	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
+	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 200 );
 	camera.position.y = 0.3;
 	camera.position.z = 2;
 
@@ -50,7 +52,8 @@ require([ 'bower_components/threex.minecraft/package.require.js'
 	
 	
 	var material	= new THREE.MeshPhongMaterial({
-		shading		: THREE.SmoothShading,
+		shading		: THREE.FlatShading,
+		// shading		: THREE.SmoothShading,
 		vertexColors 	: THREE.VertexColors,
 	});
 	var ground	= new THREE.Mesh( geometry, material );
@@ -65,10 +68,10 @@ require([ 'bower_components/threex.minecraft/package.require.js'
 	//		helpers to debug						//
 	//////////////////////////////////////////////////////////////////////////////////
 
-	var helper	= new THREE.WireframeHelper(ground)
-	helper.material.color.set('black')
-	helper.position.y	= 0.1
-	scene.add(helper)
+	// var helper	= new THREE.WireframeHelper(ground)
+	// helper.material.color.set('black')
+	// helper.position.y	= 0.1
+	// scene.add(helper)
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		comment								//

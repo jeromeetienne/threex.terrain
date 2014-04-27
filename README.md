@@ -19,6 +19,10 @@ It show how to test the height in a 3d terrain
 \[[view source](https://github.com/jeromeetienne/threex.terrain/blob/master/examples/minecraft.html)\] :
 It show a minecraft character walking on perlin terrain
 
+A Screenshot
+============
+[![screenshot](https://raw.githubusercontent.com/jeromeetienne/threex.terrain/master/examples/images/screenshot-threex-terrain-512x512.jpg)](http://jeromeetienne.github.io/threex.terrain/examples/planegeometry.html)
+
 How To Install It
 =================
 

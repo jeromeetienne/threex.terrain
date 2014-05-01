@@ -1,8 +1,6 @@
 threex.terrain
 =============
-
-threex.terrain is a three.js extension which provide an procedural terrain generated from
-from a simplex noise.
+threex.terrain is a [three.js games extension](http://www.threejsgames.com/extensions/) which provides a procedural terrain generated from a simplex noise, the [Perlin noise](http://en.wikipedia.org/wiki/Perlin_noise). As you can see you have different zones that make the terrain more varied, the blue zone represents water, the green one represents trees or grass and the white zone at the mountain top is snow. Imagine your video game character walking on these 3D mountains or flying over them, pretty cool eh? You can take him through river, forest, wind and snow if you want ;)  
 
 Show Don't Tell
 ===============
